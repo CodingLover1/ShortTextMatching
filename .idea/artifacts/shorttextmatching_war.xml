@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="shorttextmatching:war">
+    <output-path>$PROJECT_DIR$/shorttextmatching/target</output-path>
+    <root id="archive" name="shorttextmatching.war">
+      <element id="artifact" artifact-name="shorttextmatching:war exploded" />
+    </root>
+  </artifact>
+</component>

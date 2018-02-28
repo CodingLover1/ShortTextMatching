@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+    <!-- 引入jdbc配置文件，在下文中就可以通过${name}来使用值 -->
+    <context:property-placeholder location="classpath:jdbc.properties" />
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.user}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="maxWait" value="28800" />
+    </bean>
+
+    <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- 创建SqlSessionFactory，同时指定数据源 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!-- 指定mapper xml文件的路径 你可以放在resources目录下，然后通过classpath来引入 -->
+        <property name="mapperLocations" value="classpath:mapper/*.xml" />
+    </bean>
+
+    <!-- Mapper接口所在包名，Spring会自动查找其下的Mapper ，mybatis会自动通过xml映射文件，生成相应的代码，然后通过mapper 接口来调用相关的操作-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.ws.mybatis.mapper" />
+    </bean>
+
+    <!-- 可通过注解控制事务 -->
+    <tx:annotation-driven />
+
+</beans>

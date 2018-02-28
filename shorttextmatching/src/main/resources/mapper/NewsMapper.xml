@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 这块等于dao接口的实现，namespace必须和接口的类路径一样 -->
+<mapper namespace="com.ws.mapper.NewsMapper">
+    <!-- mapper接口中的函数应该和id所设置的相同，如果没有为自定义类型设置别名，则需要使用完整的包加类名 -->
+    <resultMap id="newsMap" type="com.ws.bean.News">
+        <id property="newsId" column="news_id"/>
+        <result property="newsTitle" column="news_title" />
+        <result property="newsHref" column="news_href" />
+        <result property="newsContent" column="news_content" />
+        <result property="newsDate" column="news_date" />
+        <result property="className" column="class_name" />
+    </resultMap>
+
+    <insert id="insertANews" parameterType="com.ws.bean.News">
+      insert into news (news_title,news_href,news_content,news_date,class_name)
+      values(#{newsTitle},#{newsHref},#{newsContent},#{newsDate},#{className})
+    </insert>
+
+</mapper>
