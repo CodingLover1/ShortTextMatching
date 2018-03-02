@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.ws.bean.News" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- 像这些文档类型声明文件和数据定义文件不能缺少，否则jstl表达式等就不能使用了 -->
 <%@ include file="/WEB-INF/include/taglib.jsp" %>
@@ -6,8 +8,8 @@
 <head>
     <title>检索</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="comonjs/jquery-1.11.2.min.js"></script>
     <style type="text/css">
-
         #keyword {
             width:500px;
             height:22px;
@@ -54,6 +56,30 @@
         .text_href a{
             color:green;
         }
+
+        #pageList{
+            margin-left:108px;
+            margin-top: 20px;
+        }
+        .page-box{
+            width:22px;
+            height:22px;
+            font-size:12px;
+            border:1px solid;
+            margin:2px;
+            line-height: 22px;
+            text-align: center;
+            display: inline-block;
+            color:dodgerblue;
+        }
+
+        .page-box:hover{
+            color:red;
+        }
+
+        .curret-page{
+            color:green;
+        }
     </style>
 </head>
 <body>
@@ -87,7 +113,49 @@
         </div>
     </div>
 
-    <c:forEach var="news" items="${newsList}">
+    <%
+        List<News> newsList=(List<News>) session.getAttribute("newsList");
+        int currentPage=(int)session.getAttribute("currentPage");
+        for(int i=currentPage;i<currentPage+10;i++){
+    %>
+    <div class="text">
+        <div class="text_title">
+            <a href="showDetail.action?newsId=<%= newsList.get(i).getNewsId()%>"><%=newsList.get(i).getNewsTitle()%></a>
+        </div>
+        <div class="text_content">
+            <%=newsList.get(i).getNewsAbstract()%>...
+        </div>
+        <div class="text_href">
+            <a href="<%=newsList.get(i).getNewsHref()%>"><%=newsList.get(i).getNewsHref()%></a>
+        </div>
+    </div>
+    <%
+        }
+    %>
+    <div id="pageList">
+        <%
+            int pageCount=newsList.size()/10;
+            for(int i=0;i<pageCount;i++){
+                if(i==(currentPage-1)){
+        %>
+            <div class="page-box curret-page">
+                <%=i+1%>
+            </div>
+        <%
+            }
+            else{
+        %>
+        <div class="page-box">
+            <%=i+1%>
+        </div>
+        <%
+        }
+        %>
+        <%
+        }
+        %>
+    </div>
+    <%--<c:forEach var="news" items="${newsList}">
         <div class="text">
             <div class="text_title">
                 <a href="showDetail.action?newsId=${news.newsId}">${news.newsTitle}</a>
@@ -99,8 +167,17 @@
                 <a href="${news.newsHref}">${news.newsHref}</a>
             </div>
         </div>
-    </c:forEach>
-</div>
+    </c:forEach>--%>
 
+
+</div>
+<script>
+    $(".page-box").each(function(){
+        $(this).bind("click",function(){
+            console.log($(this).text());
+            window.location.href="${basePath}/getPageContent.action?index="+$(this).text().trim();
+        })
+    })
+</script>
 </body>
 </html>

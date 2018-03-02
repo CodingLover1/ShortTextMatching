@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -26,13 +27,16 @@ public class SearchController {
     private MyQuery query;
 
     @RequestMapping(value="search",method= RequestMethod.POST)
-    public String search(@RequestParam(name="keyword") String keyword,Model model){
+    public String search(@RequestParam(name="keyword") String keyword, Model model, HttpSession httpSession){
         try {
-            newsList=query.search(indexDir, keyword, 20);
+            newsList=query.search(indexDir, keyword, 100);
         }catch (Exception e){
             e.printStackTrace();
         }
-        model.addAttribute("newsList",newsList);
+//        model.addAttribute("newsList",newsList);
+//        model.addAttribute("pageCount",newsList.size()/20);
+        httpSession.setAttribute("newsList",newsList);
+        httpSession.setAttribute("currentPage",1);
         return "ShowInf";
     }
 
@@ -41,5 +45,12 @@ public class SearchController {
         News news=newsList.get(newsId);
         model.addAttribute("news",news);
         return "showNewsDetail";
+    }
+
+    @RequestMapping(value="getPageContent",method=RequestMethod.GET)
+    public String getPageContent(@RequestParam("index") int index,HttpSession httpSession){
+        System.out.println(index);
+        httpSession.setAttribute("currentPage",index);
+        return "ShowInf";
     }
 }
