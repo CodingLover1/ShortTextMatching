@@ -69,6 +69,7 @@
           <element id="library" level="project" name="Maven: org.languagetool:language-zh:2.5" />
           <element id="library" level="project" name="Maven: com.googlecode.ictclas4j:ictclas4j:1.0.1" />
           <element id="library" level="project" name="Maven: com.google.code:cjftransform:1.0.1" />
+          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.40" />
         </element>
       </element>
       <element id="directory" name="META-INF">

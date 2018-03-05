@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
-<head lang="en">
+<head lang="zh">
 <meta charset="UTF-8">
 <title>短文本匹配系统</title>
 <script type="text/javascript" src="comonjs/jquery-1.11.2.min.js"></script>
@@ -40,6 +40,7 @@
     #head-right a{
         color:#fff;
         font-size:13px;
+        z-index: 1002;
 
     }
 
@@ -72,6 +73,54 @@
         border:0px;
         padding:0px;
     }
+    /******************登录弹框****************************/
+   .box_lg{
+       display: none;
+       position:absolute;
+       top:20%;
+       left:35%;
+       width:350px;
+       height:300px;
+       background-color:white;
+       z-index: 1005;
+   }
+    
+    .box_bg{
+    position:absolute;
+    display:none;
+    top:0%;
+    left:0%;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,.7);
+        z-index: 1001;
+
+    }
+
+   .box_cont{
+        margin-top:20px;
+       text-align: center;
+   }
+
+    .inputText{
+        width:280px;
+        height:27px;
+        margin-top:20px;
+    }
+
+    .btn-login{
+        width:284px;
+        height:31px;
+        margin-top:20px;
+        background-color:deepskyblue;
+        border:0px;
+    }
+
+   .box_ft{
+       margin-top:20px;
+       margin-left:30px;
+       font-size:14px;
+   }
 
 </style>
 
@@ -80,7 +129,16 @@
 <div id="wrapper">
     <div id="head-wrap">
         <div id="head-right">
-            <a id="alogin" href="javascript:void(0)">登录</a>
+            <a id="alogin" href="javascript:void(0)" onclick="showLogin()">
+                <c:choose>
+                    <c:when test="${sessionScope.user==null}">
+                        登录
+                    </c:when>
+                    <c:otherwise>
+                        ${sessionScope.user.userName}
+                    </c:otherwise>
+                </c:choose>
+            </a>
         </div>
     </div>
     <div id="content">
@@ -94,10 +152,28 @@
             </form>
         </div>
     </div>
-
     <div style="color:#fff;width:100% ;height:23px;line-height: 23px; text-align: center;font-size:14px;margin:300px auto 30px;">
         版权所有&copy;962199594@qq.com
     </div>
+    <div class="box_lg">
+        <div class="box_tit">
+            <a class="close" style="float:right " href="javascript:void(0)" onclick="hiddenDialog()">X</a>
+            <span style="background-color:deepskyblue;color:white;display: block;">登录账号</span>
+        </div>
+
+        <div class="box_cont">
+            <form class="box_frm" action="#">
+                <input type="text" placeholder="用户名" name="userName" id="userName" class="inputText" /><br />
+                <input type="password" placeholder="密码" name="userPassword" id="userPassword"class="inputText" /><br/>
+                <input type="button"  value="登录" class="btn-login" onclick="login()"/>
+            </form>
+        </div>
+        <div class="box_ft">
+            <input type="checkbox" style="margin-right: 8px"><span >下次自动登录</span>
+            <a href="#" style="margin-left:110px;">立即注册</a>
+        </div>
+    </div>
+    <div class="box_bg"></div>
 </div>
 <script>
     $("#keyword").keydown(function(){
@@ -122,6 +198,51 @@
             formId.action="search.action";
             formId.submit();
         }
+    }
+
+    function showLogin(){
+        <c:choose>
+        <c:when test="${sessionScope.loginflag==null}">
+        var loginflag=false;
+        </c:when>
+        <c:otherwise>
+        var loginflag=true;
+        </c:otherwise>
+        </c:choose>
+        if(!loginflag) {
+            $(".box_bg").css("display", "block");
+            $(".box_lg").css("display", "block");
+        }
+        else{
+            window.open("${basePath}/user/showuser.action");
+        }
+    }
+
+    function hiddenDialog(){
+        $(".box_bg").css("display","none");
+        $(".box_lg").css("display","none");
+    }
+
+    function login(){
+
+        if($("#userName").val().trim().length==0||$("#userPassword").val().trim().length==0){
+            alert("用户名或密码不能为空");
+         }
+         $.ajax({
+             url:"${basePath}/user/userlogin.action",
+             type:"POST",
+             data:{"userName":$("#userName").val().trim(),"userPassword":$("#userPassword").val().trim()},
+             dataType:"json",
+             scriptCharset:"utf-8",
+             success:function(data){
+                 document.getElementById("alogin").innerText=data.userName;
+                 hiddenDialog();
+                 location.reload();
+             },
+             error:function(){
+                    alert("你输入的用户名或密码不对");
+             }
+         })
     }
 </script>
 </body>

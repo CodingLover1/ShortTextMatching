@@ -1,7 +1,9 @@
 package com.ws.controller;
 
 import com.ws.bean.News;
+import com.ws.bean.User;
 import com.ws.lucene.myquery.MyQuery;
+import com.ws.mapper.UserMapper;
 import com.ws.util.WordCount;
 import org.apache.lucene.document.Document;
 import org.slf4j.Logger;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jnlp.UnavailableServiceException;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -26,6 +30,9 @@ public class SearchController {
     @Autowired
     private MyQuery query;
 
+    @Autowired
+    UserMapper userMapper;
+
     @RequestMapping(value="search",method= RequestMethod.POST)
     public String search(@RequestParam(name="keyword") String keyword, Model model, HttpSession httpSession){
         try {
@@ -33,10 +40,13 @@ public class SearchController {
         }catch (Exception e){
             e.printStackTrace();
         }
+        if(newsList==null||newsList.size()==0)
+            return "ShowNotFound";
 //        model.addAttribute("newsList",newsList);
 //        model.addAttribute("pageCount",newsList.size()/20);
         httpSession.setAttribute("newsList",newsList);
         httpSession.setAttribute("currentPage",1);
+
         return "ShowInf";
     }
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 这块等于dao接口的实现，namespace必须和接口的类路径一样 -->
+<mapper namespace="com.ws.mapper.UserMapper">
+
+    <select id="selectUserByUserName" resultType="com.ws.bean.User" parameterType="com.ws.bean.User">
+        select user_id,user_name,user_password,user_sex,user_phone,create_time
+        from user
+        where user_name=#{userName} and user_password=#{userPassword}
+    </select>
+
+    <insert id="insertUser" parameterType="com.ws.bean.User">
+        insert into user(user_name,user_password,user_sex,user_phone,create_time)
+        values(#{userName},#{userPassword},#{userSex},#{userPhone},#{createTime})
+    </insert>
+
+    <update id="updateUser" parameterType="com.ws.bean.User">
+        update USER
+        set user_name=#{userName},user_password=#{userPassword},user_sex=#{userSex},user_Phone=#{userPhone}
+       where user_id=#{userId}
+    </update>
+
+</mapper>

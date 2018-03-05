@@ -10,6 +10,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script type="text/javascript" src="comonjs/jquery-1.11.2.min.js"></script>
     <style type="text/css">
+
+        #head{
+            width:100%;
+
+        }
+        #content{
+        }
+
+        #head #left_box{
+            display: inline-block;
+        }
+
+        #head #right_box{
+            float:right;
+            font-size:14px;
+            margin-top: 20px;
+        }
         #keyword {
             width:500px;
             height:22px;
@@ -87,15 +104,28 @@
     <div id="left_box">
         <div id="head_img"><img src="images/baidu_logo.gif" /></div>
         <div style="display: inline-block;">
-            <form action="" method="post" >
+            <form id="searchForm" action="#" method="post" >
                 <input type="text" name="keyword" maxlength="255" id="keyword"/>
-                <input type="submit" value="检索" class="submit" id="su"/>
+                <input type="button" value="检索" class="submit" onclick="mysubmit()" id="su"/>
             </form>
         </div>
     </div>
     <div id="right_box">
+        <a href="${basePath}">主页</a>
+        <a href="${basePath}/user/showuser.action">
+            <c:choose>
+                <c:when test="${sessionScope.user==null}">
+                    登录
+                </c:when>
+                <c:otherwise>
+                    ${sessionScope.user.userName}
+                </c:otherwise>
+            </c:choose>
+         </a>
     </div>
+    <hr/>
 </div>
+
 
 <div id="content">
     <div class="text">
@@ -178,6 +208,17 @@
             window.location.href="${basePath}/getPageContent.action?index="+$(this).text().trim();
         })
     })
+
+    function mysubmit(){
+        if($("#keyword").val().trim().length==0) {
+            alert("请输入短文本信息");
+        }
+        else{
+            var formId=document.getElementById("searchForm");
+            formId.action="search.action";
+            formId.submit();
+        }
+    }
 </script>
 </body>
 </html>
