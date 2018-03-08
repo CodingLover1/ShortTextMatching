@@ -1,0 +1,120 @@
+
+body {
+    width:100%;
+    height:100%;
+    background-image:url("${basePath}/images/wrapper.jpg");
+    background-repeat:no-repeat;
+    background-size:100%;
+}
+a {
+    margin:0px 5px;
+}
+
+#head-wrap{
+    margin:0px;
+    padding:0px;
+    width:100%;
+    height:32px;
+    background-color:rgba(0,0,0,.4);
+
+    position: fixed;
+    left:0px;
+    top:0px;
+}
+
+#head-right{
+    float:right;
+    color:red;
+    margin-right:20px;
+    line-height: 32px;
+}
+
+#head-right a{
+    color:#fff;
+    font-size:13px;
+    z-index: 1002;
+
+}
+
+#content{
+
+}
+
+#logo{
+    width:200px;
+    height:100px;
+    margin:50px auto 30px;
+}
+
+#search{
+    margin:0px auto;
+    text-align:center;
+}
+
+#keyword{
+    width:537px;
+    height:34px;
+    padding:0px;
+    border-width:0px;
+}
+
+.jiansuo{
+    width:104px;
+    height:32px;
+    margin:0px;
+    border:0px;
+    padding:0px;
+}
+/******************登录弹框****************************/
+.box_lg{
+    display: none;
+    position:absolute;
+    top:20%;
+    left:35%;
+    width:350px;
+    height:300px;
+    background-color:white;
+    z-index: 1005;
+}
+
+.box_bg{
+    position:absolute;
+    display:none;
+    top:0%;
+    left:0%;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,.7);
+    z-index: 1001;
+
+}
+
+.box_cont{
+    margin-top:20px;
+    text-align: center;
+}
+
+.inputText{
+    width:280px;
+    height:27px;
+    margin-top:20px;
+}
+
+.btn-login{
+    width:284px;
+    height:31px;
+    margin-top:20px;
+    background-color:deepskyblue;
+    border:0px;
+}
+
+.box_ft{
+    margin-top:20px;
+    margin-left:30px;
+    font-size:14px;
+}
+
+#alogout{
+    display: none;
+
+}

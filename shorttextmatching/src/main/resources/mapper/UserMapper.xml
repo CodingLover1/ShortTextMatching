@@ -6,13 +6,22 @@
 <!-- 这块等于dao接口的实现，namespace必须和接口的类路径一样 -->
 <mapper namespace="com.ws.mapper.UserMapper">
 
+    <resultMap id="userResultMap" type="com.ws.bean.User">
+        <id property="userId" column="user_id" />
+        <result property="userName" column="user_Name"/>
+        <result property="userPassword" column="user_password" />
+        <result property="userSex" column="user_sex" />
+        <result property="userPhone" column="user_phone" />
+        <result property="createTime" column="create_time" />
+    </resultMap>
+
     <select id="selectUserByUserName" resultType="com.ws.bean.User" parameterType="com.ws.bean.User">
         select user_id,user_name,user_password,user_sex,user_phone,create_time
         from user
         where user_name=#{userName} and user_password=#{userPassword}
     </select>
 
-    <insert id="insertUser" parameterType="com.ws.bean.User">
+    <insert id="insertUser" parameterType="com.ws.bean.User" keyProperty="userId" useGeneratedKeys="true">
         insert into user(user_name,user_password,user_sex,user_phone,create_time)
         values(#{userName},#{userPassword},#{userSex},#{userPhone},#{createTime})
     </insert>

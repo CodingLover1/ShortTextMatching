@@ -5,30 +5,7 @@
 <html>
 <head>
     <title>${news.newsTitle}</title>
-    <style type="text/css">
-        .text{
-            width:610px;
-            margin:70px 0px 0px 110px;
-            font-size:14px;
-            display: inline-block;
-        }
-
-        .text_title {
-            text-align:center;
-        }
-
-        .text_content {
-            margin:20px 0px ;
-        }
-
-        #wordClound {
-            width:400px;
-            height:500px;
-            /*background-color:blue;*/
-            float:right;
-            margin:100px 100px 0px 0px;
-        }
-    </style>
+    <link href="${basePath}/css/shownewsdetail.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="text">

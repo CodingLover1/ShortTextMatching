@@ -9,17 +9,16 @@ import java.util.HashMap;
 
 /**
  * 网页爬虫的启动类
+ *  "http://news.baidu.com/"
+ * "http://news.sina.com.cn/"
+ * "http://news.sohu.com/"
+ * "http://news.163.com/"
  */
 public class CrawlerMain {
     public static void main(String[] args){
         CrawlerStart crawlerStart =new CrawlerStart();
+
         //设置请求方式及起始URL
-        /**
-         * "http://news.baidu.com/"
-         * "http://news.sina.com.cn/"
-         * "http://news.sohu.com/"
-         * "http://news.163.com/"
-         */
         crawlerStart.setRequestMethod("get","http://news.sina.com.cn");
 
         //设置请求头部参数信息
@@ -32,15 +31,15 @@ public class CrawlerMain {
         CrawlerConfig config=new CrawlerConfig();
         config.setSubDomainRegex("http://[a-z]+.sina.com.cn/");
         config.setDownloadRegex("[a-z]+/[\\d]{4}-[\\d]{2}-[\\d]{2}/doc-[a-z]+[\\d]+.shtml");
-        config.setStorePath("E:\\mycrawler\\data\\");
+
+        //设置存储路径
+        config.setStorePath("E:\\mycrawler\\data1\\");
         ArrayList<String> divIdList=new ArrayList<>();
-      //  divIdList.add("endText");  163.com
         divIdList.add("artibody");
         divIdList.add("article");
         config.setDivIdList(divIdList);
-        config.setIndexDir("E:\\mycrawler\\index");
+        config.setIndexDir("E:\\mycrawler\\index1");
         crawlerStart.setConfig(config);
-
         crawlerStart.start();
     }
 }

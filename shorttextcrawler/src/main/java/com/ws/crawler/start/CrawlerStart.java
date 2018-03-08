@@ -119,8 +119,8 @@ public class CrawlerStart {
         Elements elements=document.select("a[href]");
 
         for(Element e:elements){
-            String href=e.attr("abs:href");
-            String text=e.text();
+            String href=e.attr("abs:href");//子域名的URL
+            String text=e.text(); //子域名的分类名
             if(href.matches(config.getSubDomainRegex())){
                 if(text.matches(config.getClassRegex())){
                     subDomainMap.put(text,href);

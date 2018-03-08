@@ -1,0 +1,139 @@
+
+#head{
+    width:100%;
+
+}
+#content{
+}
+
+#head #left_box{
+    display: inline-block;
+}
+
+#head #right_box{
+    float:right;
+    font-size:14px;
+    margin-top: 20px;
+}
+#keyword {
+    width:500px;
+    height:22px;
+}
+
+.submit{
+    height:28px;
+    width:100px;
+    color: #fff;
+    letter-spacing: 1px;
+    background: #3385ff;
+    border-bottom: 1px solid #2d78f4;
+    outline: medium;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    font-size: 14px;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+}
+
+#head_img{
+    display:inline-block;
+    width:105px;
+    height:33px;
+    margin:0px 0px 0px 0px;
+}
+
+#head_img img{
+    width:100%;
+    height:100%;
+}
+
+.text{
+    width:610px;
+    margin:10px 0px 0px 110px;
+    font-size:14px;
+}
+
+.text_href{
+    font-size:12px;
+}
+
+.text_href a{
+    color:green;
+}
+
+#pageList{
+    margin-left:108px;
+    margin-top: 20px;
+}
+.page-box{
+    width:22px;
+    height:22px;
+    font-size:12px;
+    border:1px solid;
+    margin:2px;
+    line-height: 22px;
+    text-align: center;
+    display: inline-block;
+    color:dodgerblue;
+}
+
+.page-box:hover{
+    color:red;
+}
+
+.curret-page{
+    color:green;
+}
+
+#alogout{
+    display:none;
+}
+
+/******************登录弹框****************************/
+.box_lg{
+    display: none;
+    position:absolute;
+    top:20%;
+    left:35%;
+    width:350px;
+    height:300px;
+    background-color:white;
+    z-index: 1005;
+}
+
+.box_bg{
+    position:absolute;
+    display:none;
+    top:0%;
+    left:0%;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,.7);
+    z-index: 1001;
+
+}
+
+.box_cont{
+    margin-top:20px;
+    text-align: center;
+}
+
+.box_ft{
+    margin-top:20px;
+    margin-left:30px;
+    font-size:14px;
+}
+.inputText{
+    width:280px;
+    height:27px;
+    margin-top:20px;
+}
+
+.btn-login{
+    width:284px;
+    height:31px;
+    margin-top:20px;
+    background-color:deepskyblue;
+    border:0px;
+}

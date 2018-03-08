@@ -9,95 +9,7 @@
     <title>检索</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script type="text/javascript" src="comonjs/jquery-1.11.2.min.js"></script>
-    <style type="text/css">
-
-        #head{
-            width:100%;
-
-        }
-        #content{
-        }
-
-        #head #left_box{
-            display: inline-block;
-        }
-
-        #head #right_box{
-            float:right;
-            font-size:14px;
-            margin-top: 20px;
-        }
-        #keyword {
-            width:500px;
-            height:22px;
-        }
-
-        .submit{
-            height:28px;
-            width:100px;
-            color: #fff;
-            letter-spacing: 1px;
-            background: #3385ff;
-            border-bottom: 1px solid #2d78f4;
-            outline: medium;
-            -webkit-appearance: none;
-            -webkit-border-radius: 0;
-            font-size: 14px;
-            padding: 0;
-            border: 0;
-            cursor: pointer;
-        }
-
-        #head_img{
-            display:inline-block;
-            width:105px;
-            height:33px;
-            margin:0px 0px 0px 0px;
-        }
-
-        #head_img img{
-            width:100%;
-            height:100%;
-        }
-
-        .text{
-            width:610px;
-            margin:10px 0px 0px 110px;
-            font-size:14px;
-        }
-
-        .text_href{
-            font-size:12px;
-        }
-
-        .text_href a{
-            color:green;
-        }
-
-        #pageList{
-            margin-left:108px;
-            margin-top: 20px;
-        }
-        .page-box{
-            width:22px;
-            height:22px;
-            font-size:12px;
-            border:1px solid;
-            margin:2px;
-            line-height: 22px;
-            text-align: center;
-            display: inline-block;
-            color:dodgerblue;
-        }
-
-        .page-box:hover{
-            color:red;
-        }
-
-        .curret-page{
-            color:green;
-        }
-    </style>
+    <link href="${basePath}/css/showinf.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="head">
@@ -112,7 +24,7 @@
     </div>
     <div id="right_box">
         <a href="${basePath}">主页</a>
-        <a href="${basePath}/user/showuser.action">
+        <a href="javascript:void(0)" onclick="showLogin()" id="#alogin">
             <c:choose>
                 <c:when test="${sessionScope.user==null}">
                     登录
@@ -122,6 +34,7 @@
                 </c:otherwise>
             </c:choose>
          </a>
+        <a id="alogout" href="${basePath}/user/userlogout.action"  >退出</a>
     </div>
     <hr/>
 </div>
@@ -185,6 +98,26 @@
         }
         %>
     </div>
+
+    <div class="box_lg">
+        <div class="box_tit">
+            <a class="close" style="float:right " href="javascript:void(0)" onclick="hiddenDialog()">X</a>
+            <span style="background-color:deepskyblue;color:white;display: block;">登录账号</span>
+        </div>
+
+        <div class="box_cont">
+            <form class="box_frm" action="#">
+                <input type="text" placeholder="用户名" name="userName" id="userName" class="inputText" /><br />
+                <input type="password" placeholder="密码" name="userPassword" id="userPassword"class="inputText" /><br/>
+                <input type="button"  value="登录" class="btn-login" onclick="login()"/>
+            </form>
+        </div>
+        <div class="box_ft">
+            <input type="checkbox" style="margin-right: 8px"><span >下次自动登录</span>
+            <a href="${basePath}/user/userregist.action" style="margin-left:110px;">立即注册</a>
+        </div>
+    </div>
+    <div class="box_bg"></div>
     <%--<c:forEach var="news" items="${newsList}">
         <div class="text">
             <div class="text_title">
@@ -202,6 +135,22 @@
 
 </div>
 <script>
+    //判断用户是否登录
+    <c:choose>
+    <c:when test="${sessionScope.loginflag==null}">
+    var loginflag=false;
+    </c:when>
+    <c:otherwise>
+    var loginflag=true;
+    </c:otherwise>
+    </c:choose>
+
+    $(function(){
+        if(loginflag){
+            $("#alogout").css("display","inline-block");
+        }
+    });
+
     $(".page-box").each(function(){
         $(this).bind("click",function(){
             console.log($(this).text());
@@ -218,6 +167,43 @@
             formId.action="search.action";
             formId.submit();
         }
+    }
+
+    function showLogin(){
+        if(!loginflag) {
+            $(".box_bg").css("display", "block");
+            $(".box_lg").css("display", "block");
+        }
+        else{
+            window.open("${basePath}/user/showuser.action");
+        }
+    }
+
+    function hiddenDialog(){
+        $(".box_bg").css("display","none");
+        $(".box_lg").css("display","none");
+    }
+
+    function login(){
+        if($("#userName").val().trim().length==0||$("#userPassword").val().trim().length==0){
+            alert("用户名或密码不能为空");
+            return ;
+        }
+        $.ajax({
+            url:"${basePath}/user/userlogin.action",
+            type:"POST",
+            data:{"userName":$("#userName").val().trim(),"userPassword":$("#userPassword").val().trim()},
+            dataType:"json",
+            scriptCharset:"utf-8",
+            success:function(data){
+                console.log(data);
+                hiddenDialog();
+                location.reload();
+            },
+            error:function(){
+                alert("你输入的用户名或密码不对");
+            }
+        })
     }
 </script>
 </body>

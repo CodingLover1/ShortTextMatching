@@ -1,0 +1,18 @@
+.right{
+    text-align: right;
+}
+.inputText{
+    width:200px;
+    height:20px;
+}
+.save-btn{
+    width:200px;
+    height:20px;
+    border:0px;
+    margin-left:84px;
+}
+
+#wrapper{
+    width:400px;
+    margin:20px auto;
+}
