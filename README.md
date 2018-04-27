@@ -32,7 +32,7 @@
  除了根据响应状态码外，ajax还会在下列情况下走error方法：
  返回数据类型不是JSON 网络中断 后台响应中断
  
- * 使用ajax提交表单数据时，一定要把button写在form外面，why?,so confusing!
+ * 使用ajax提交表单数据时，一定要把button写在form外面.
  
  * jquery获取input type=raido的值
  $('input:radio[name="radioname"]:checked').val();
